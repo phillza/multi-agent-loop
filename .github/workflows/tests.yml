@@ -1,0 +1,58 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke:
+    name: smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check .
+
+      - name: Syntax-check every script
+        run: |
+          python -c "
+          import ast, pathlib
+          for p in pathlib.Path('.').glob('*.py'):
+              try:
+                  ast.parse(p.read_text(encoding='utf-8'))
+              except SyntaxError as e:
+                  raise SystemExit(f'syntax error in {p}: {e}')
+          print(f'OK: {sum(1 for _ in pathlib.Path(\".\").glob(\"*.py\"))} files parsed')
+          "
+
+      - name: Smoke test (Linux/macOS only)
+        if: runner.os != 'Windows'
+        run: |
+          # Dry-run the loader with the example project file. We don't
+          # actually launch Claude/Codex/opencode in CI -- just verify
+          # the script imports, the JSON parses, and the status printer
+          # runs without errors.
+          python -c "
+          import json
+          from agent_loop import load_projects, get_active_projects
+          data = json.load(open('projects.example.json'))
+          assert isinstance(data, list)
+          assert all('name' in p and 'status' in p for p in data)
+          active = get_active_projects(data)
+          print(f'OK: loaded {len(data)} projects, {len(active)} active')
+          "

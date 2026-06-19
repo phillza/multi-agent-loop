@@ -1,0 +1,39 @@
+# Local-only data — never commit
+projects.json
+projects.json.bak
+.env
+.env.local
+runtime_overrides.json
+
+# Local tooling state
+.claude/
+.claw/
+.sandbox-home/
+.sandbox-tmp/
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+
+# Virtualenvs
+.venv/
+venv/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

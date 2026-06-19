@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Example Project",
+    "path": "example-project",
+    "status": "in_progress",
+    "context": "Replace this with a one-sentence description of what the project does. The agent uses this as a fallback when the project's own AGENTS.md/CLAUDE.md is missing.",
+    "next_task": "Replace this with the specific next task you want the agent to do.",
+    "goals": [
+      "Goal one -- what you want this project to achieve",
+      "Goal two -- measurable outcome"
+    ],
+    "blocked": false,
+    "blocker_description": null,
+    "log": [
+      "Replace these log entries with what the agent has actually done. The agent appends to this list on every cycle."
+    ],
+    "wait_until": null
+  },
+  {
+    "name": "Another Project",
+    "path": "another-project",
+    "status": "improving",
+    "context": "Set the agent to 'improving' status when the obvious work is done and you want it to discover the next high-impact improvement on its own.",
+    "next_task": "Optional: a specific next task. If blank, the agent runs its improvement-discovery prompt.",
+    "goals": [
+      "Make the project more reliable",
+      "Find and fix a class of silent-failure bugs"
+    ],
+    "blocked": false,
+    "blocker_description": null,
+    "log": [],
+    "wait_until": null
+  }
+]

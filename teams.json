@@ -1,0 +1,32 @@
+{
+  "_comment": "Team configs for projects that need multiple workers. Projects not listed here get a single worker launched with the default tool. All fields are optional -- omit to use defaults.",
+  "_defaults": {
+    "orch_tool": "claude",
+    "orch_model": "sonnet",
+    "orch_effort": "medium",
+    "worker_tool": "opencode",
+    "worker_model": null,
+    "workers": 3,
+    "channel": null,
+    "strategist": false,
+    "strategist_tool": "codex",
+    "strategist_model": "gpt-5",
+    "strategist_effort": "high",
+    "strategist_interval_minutes": 30
+  },
+  "my-project": {
+    "_comment_example": "Override defaults for a specific project. The example below launches a 3-worker team with codex as orchestrator and opencode workers. Copy this block, rename the key to your project's name (must match a `name` field in projects.json), and tweak the values.",
+    "orch_tool": "codex",
+    "orch_model": "gpt-5",
+    "orch_effort": "high",
+    "worker_tool": "opencode",
+    "worker_model": null,
+    "workers": 3,
+    "channel": "my-project-team",
+    "strategist": true,
+    "strategist_tool": "codex",
+    "strategist_model": "gpt-5",
+    "strategist_effort": "high",
+    "strategist_interval_minutes": 30
+  }
+}
