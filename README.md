@@ -53,8 +53,25 @@ Codex / OpenCode directly.
   terminal windows via `subprocess.Popen`.
 - At least one of: **Claude Code** (`claude`), **Codex CLI** (`codex`),
   or **OpenCode** (`opencode`) installed and on `PATH`.
+- **A working auth path for the tool you pick.** Specifically:
+  - For **Claude Code**: either an active subscription *or*
+    `ANTHROPIC_API_KEY` in your environment. If your organization
+    has disabled subscription access, you must use the API key
+    path. Without a working auth path, `claude --print` will
+    return an auth-error message that the worker will correctly
+    log as "Failed to parse JSON from response" and retry.
+  - For **Codex CLI**: an active OpenAI auth path.
+  - For **OpenCode**: a configured provider.
 
 The repo has zero pip dependencies — it's stdlib only.
+
+### Common first-run gotchas
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `FileNotFoundError: ... 'projects.json'` | You skipped the `cp` step in quick start | `cp projects.example.json projects.json` then edit |
+| `Failed to parse JSON from Claude's response. Retrying...` (forever) | Auth path is broken — Claude/Codex/OpenCode rejected the call | Check `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` / provider config |
+| Workers launch but immediately exit | CLI tool not on `PATH` or wrong name | `where claude` / `where codex` / `where opencode` on Windows; `which` on macOS/Linux |
 
 ## Quick start
 
