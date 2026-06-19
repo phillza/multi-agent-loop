@@ -16,7 +16,6 @@ import os
 import re
 import shutil
 import subprocess
-import sys
 import tempfile
 from datetime import datetime
 
@@ -143,11 +142,11 @@ def main():
     model = CLAUDE_MODELS.get(args.model, args.model)
     handles = [make_handle(p["name"]) for p in active]
 
-    print(f"\n=== Global Orchestrator ===")
+    print("\n=== Global Orchestrator ===")
     print(f"  Model:    claude {model}")
     print(f"  Projects: {', '.join(p['name'] for p in active)}")
     print(f"  Handles:  {', '.join(handles)}")
-    print(f"  Walkie-talkie hub must be running at http://localhost:9559\n")
+    print("  Walkie-talkie hub must be running at http://localhost:9559\n")
 
     prompt = build_prompt(active)
     pf = os.path.join(tempfile.gettempdir(), "agentloop_global_orchestrator.txt")
@@ -155,10 +154,10 @@ def main():
         f.write(prompt)
 
     initial_msg = (
-        f"You are the global orchestrator. Join walkie-talkie as 'orchestrator', "
-        f"then radio_standby on #all. Workers will announce themselves with 'READY [handle]: ready for task'. "
-        f"When you receive a READY message, read their project entry in projects.json and send them their task. "
-        f"Do not send any tasks until a worker announces they are ready."
+        "You are the global orchestrator. Join walkie-talkie as 'orchestrator', "
+        "then radio_standby on #all. Workers will announce themselves with 'READY [handle]: ready for task'. "
+        "When you receive a READY message, read their project entry in projects.json and send them their task. "
+        "Do not send any tasks until a worker announces they are ready."
     )
 
     cmd = [
@@ -185,8 +184,8 @@ def main():
         cmd_str = " ".join(f'"{c}"' if " " in c else c for c in wrapped_cmd)
         subprocess.Popen(f'start "[GLOBAL ORCH]" {cmd_str}', shell=True, cwd=AGENTLOOP_DIR)
 
-    print(f"Global orchestrator launched!")
-    print(f"Monitor at http://localhost:9559")
+    print("Global orchestrator launched!")
+    print("Monitor at http://localhost:9559")
 
 
 if __name__ == "__main__":

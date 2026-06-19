@@ -93,7 +93,7 @@ def update_project(project_name, updates):
 def extract_json(raw_text):
     if not raw_text or not raw_text.strip():
         return None
-    lines = [l.strip() for l in raw_text.strip().split("\n") if l.strip()]
+    lines = [line.strip() for line in raw_text.strip().split("\n") if line.strip()]
     for line in reversed(lines):
         if line.startswith("{") and line.endswith("}"):
             try:
@@ -339,7 +339,7 @@ def build_discovery_prompt(project):
     goals = project.get("goals", [])
     goals_text = "\n".join(f"  - {g}" for g in goals) if goals else "  - Make it better (no specific goals set)"
     recent_log = project.get("log", [])[-5:]
-    log_text = "\n".join(f"  - {l}" for l in recent_log) if recent_log else "  (none)"
+    log_text = "\n".join(f"  - {entry}" for entry in recent_log) if recent_log else "  (none)"
     project_dir = get_project_dir(project)
 
     return f"""
@@ -388,7 +388,7 @@ def worker_loop(project_name):
     cprint(C.BOLD, f"\n{'='*60}")
     cprint(C.BOLD, f"  AgentLoop Worker: {project_name}")
     cprint(C.BOLD, f"  Directory: {proj_dir}")
-    cprint(C.BOLD, f"  Press Ctrl+C to interrupt and take over")
+    cprint(C.BOLD, "  Press Ctrl+C to interrupt and take over")
     cprint(C.BOLD, f"{'='*60}\n")
 
     while True:
@@ -419,7 +419,7 @@ def worker_loop(project_name):
                     time.sleep(300)
                     continue
                 else:
-                    cprint(C.GREEN, f"Wait time passed, resuming!")
+                    cprint(C.GREEN, "Wait time passed, resuming!")
                     update_project(project_name, {"wait_until": None})
             except ValueError:
                 update_project(project_name, {"wait_until": None})
@@ -430,7 +430,7 @@ def worker_loop(project_name):
             cprint(C.MAGENTA, "\n--- IMPROVEMENT MODE ---")
             prompt = build_discovery_prompt(current)
         else:
-            cprint(C.GREEN, f"\n--- TASK ---")
+            cprint(C.GREEN, "\n--- TASK ---")
             cprint(C.BOLD, current["next_task"])
             print()
             prompt = build_task_prompt(current)

@@ -28,7 +28,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Set
 
-import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 
@@ -365,7 +364,6 @@ def build_project_list_payload() -> list[dict]:
             queue_depth = project_entry.get("queue_depth")
         else:
             queue_depth = max(queue_depths) if queue_depths else safe_queue_depth(project["name"])
-        worker_entries = [entry for entry in fresh_entries if entry.get("role") != "strategist"]
         strategist_entries = [entry for entry in fresh_entries if entry.get("role") == "strategist"]
         worker_slot_count, busy_slots = worker_counts(fresh_entries)
         state = summarize_runtime_state(project, project_entry, fresh_entries)
@@ -1567,14 +1565,14 @@ def main():
 
     port = find_free_port()
     url = f"http://localhost:{port}"
-    print(f"\nAgentLoop Web Monitor")
+    print("\nAgentLoop Web Monitor")
     if _monitor_mode == "legacy":
-        print(f"Mode: legacy in-process workers")
+        print("Mode: legacy in-process workers")
         print(f"Starting {active_count} worker(s)...")
     else:
         runtime_status = load_runtime_status()
         runtime_slots = len((runtime_status.get('workers') or {}).values())
-        print(f"Mode: passive runtime status view")
+        print("Mode: passive runtime status view")
         print(f"Watching {active_count} active project(s) and {runtime_slots} runtime slot record(s)...")
     print(f"Dashboard: {url}\n")
 

@@ -213,8 +213,6 @@ def run_with_heartbeat(
     )
     status_store.update_worker(worker_id, {"pid": proc.pid, "started_at": iso_now()})
 
-    stop_event = threading.Event()
-
     def reader() -> None:
         with log_path.open("a", encoding="utf-8") as handle:
             handle.write(f"\n=== {iso_now()} {worker_id} ===\n")

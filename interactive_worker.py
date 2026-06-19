@@ -131,7 +131,7 @@ def update_project(project_name, updates):
 def extract_json(raw_text):
     if not raw_text or not raw_text.strip():
         return None
-    lines = [l.strip() for l in raw_text.strip().split("\n") if l.strip()]
+    lines = [line.strip() for line in raw_text.strip().split("\n") if line.strip()]
     for line in reversed(lines):
         if line.startswith("{") and line.endswith("}"):
             try:
@@ -357,7 +357,7 @@ def build_discovery_prompt(project):
     goals = project.get("goals", [])
     goals_text = "\n".join(f"  - {g}" for g in goals) if goals else "  - Make it better"
     recent_log = project.get("log", [])[-5:]
-    log_text = "\n".join(f"  - {l}" for l in recent_log) if recent_log else "  (none)"
+    log_text = "\n".join(f"  - {entry}" for entry in recent_log) if recent_log else "  (none)"
     project_dir = get_project_dir(project)
 
     return f"""Project: {project['name']}
@@ -416,7 +416,7 @@ def interactive_worker_loop(project_name):
     cprint(C.BOLD, f"\n{'='*60}")
     cprint(C.BOLD, f"  Interactive Worker: {project_name}")
     cprint(C.BOLD, f"  Directory: {proj_dir}")
-    cprint(C.BOLD, f"  Type anything to steer | Ctrl+C to stop")
+    cprint(C.BOLD, "  Type anything to steer | Ctrl+C to stop")
     cprint(C.BOLD, f"{'='*60}\n")
 
     start_stdin_reader()
@@ -480,7 +480,7 @@ def interactive_worker_loop(project_name):
                 cprint(C.MAGENTA, "\n--- IMPROVEMENT MODE ---")
                 initial_prompt = build_discovery_prompt(current)
             else:
-                cprint(C.GREEN, f"\n--- TASK ---")
+                cprint(C.GREEN, "\n--- TASK ---")
                 cprint(C.BOLD, current.get("next_task", "No task set"))
                 print()
                 initial_prompt = build_task_prompt(current)

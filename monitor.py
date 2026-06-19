@@ -13,13 +13,11 @@ import os
 import re
 import subprocess
 import sys
-import time
-from datetime import datetime
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
-from textual.widgets import Header, Footer, RichLog, Input, Label, Button, Rule
+from textual.widgets import Header, Footer, RichLog, Input, Label, Button
 from textual._work_decorator import work
 
 # --- Config ---
@@ -218,7 +216,7 @@ class ProjectPanel(Vertical):
                 "-d", project_dir,
                 "--", "claude", "--continue",
             ])
-            self.log_system(f"[green]Opened interactive Claude session in new tab.[/green]")
+            self.log_system("[green]Opened interactive Claude session in new tab.[/green]")
             self.log_system("[dim]Switch to that tab to chat. Come back here when done.[/dim]")
         except Exception as e:
             self.log_system(f"[red]Could not open tab: {e}[/red]")

@@ -59,7 +59,7 @@ def steer(name_query, message):
     save_projects(projects)
     print(f"Steered '{project['name']}'")
     print(f"  next_task = [USER STEERED] {message}")
-    print(f"  (will pick up after current task completes)")
+    print("  (will pick up after current task completes)")
 
 
 def main():

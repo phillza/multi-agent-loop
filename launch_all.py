@@ -679,10 +679,10 @@ def main():
         print("No active projects found.")
         return
 
-    print(f"\n=== AgentLoop Launch All ===")
+    print("\n=== AgentLoop Launch All ===")
     print(f"  Mode: {args.mode}")
     if args.mode == "interactive":
-        print(f"  Walkie-talkie hub must be running first!\n")
+        print("  Walkie-talkie hub must be running first!\n")
     else:
         print()
 

@@ -1,6 +1,5 @@
 """Helper: reads prompt from file and launches interactive claude with it."""
 import os
-import subprocess
 import sys
 
 prompt_file = sys.argv[1]

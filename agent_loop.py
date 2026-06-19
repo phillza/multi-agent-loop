@@ -109,9 +109,9 @@ def main():
         if i < len(active) - 1:
             time.sleep(STAGGER_SECONDS)
 
-    print(f"\nAll workers launched!")
-    print(f"Switch between tabs to watch each worker.")
-    print(f"Press Ctrl+C in any tab to take over that session.")
+    print("\nAll workers launched!")
+    print("Switch between tabs to watch each worker.")
+    print("Press Ctrl+C in any tab to take over that session.")
 
 
 if __name__ == "__main__":

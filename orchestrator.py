@@ -23,7 +23,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-import time
 from datetime import datetime
 
 PROJECTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "projects.json")
@@ -56,8 +55,6 @@ def build_orchestrator_prompt(active_projects):
         f"  - Handle: {make_handle(p['name'])} | Project: {p['name']} | Task: {p.get('next_task', 'check CLAUDE.md')[:100]}"
         for p in active_projects
     )
-
-    handles = [make_handle(p["name"]) for p in active_projects]
 
     return f"""You are the AgentLoop Orchestrator. You coordinate autonomous Claude workers via walkie-talkie.
 

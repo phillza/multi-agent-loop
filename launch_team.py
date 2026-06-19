@@ -731,7 +731,7 @@ Examples:
         strategist_model_note = f" {args.strategist_model}" if args.strategist_model else ""
         print(f"  Strategist:   [{args.strategist_tool}]{strategist_model_note} every {args.strategist_interval_minutes}m")
     if args.mode == "interactive":
-        print(f"\n  Walkie-talkie hub must be running first!")
+        print("\n  Walkie-talkie hub must be running first!")
     print("=" * 42 + "\n")
 
     if args.mode == "autonomous":
