@@ -29,16 +29,23 @@ jobs:
           ruff check .
 
       - name: Syntax-check every script
+        shell: pwsh
         run: |
-          python -c "
-          import ast, pathlib
+          @'
+          import ast, pathlib, sys
+          failed = []
           for p in pathlib.Path('.').glob('*.py'):
               try:
                   ast.parse(p.read_text(encoding='utf-8'))
               except SyntaxError as e:
-                  raise SystemExit(f'syntax error in {p}: {e}')
-          print(f'OK: {sum(1 for _ in pathlib.Path(\".\").glob(\"*.py\"))} files parsed')
-          "
+                  failed.append(f'{p}: {e}')
+          if failed:
+              print('SYNTAX ERRORS:')
+              for f in failed:
+                  print('  ' + f)
+              sys.exit(1)
+          print(f'OK: {sum(1 for _ in pathlib.Path(".").glob("*.py"))} files parsed')
+          '@ | python -
 
       - name: Smoke test (Linux/macOS only)
         if: runner.os != 'Windows'
